@@ -25,16 +25,18 @@ class Player:
     
     def clip(self, RES):
         if sefl.px < RES[0]:
-            self.px = RES[
+            self.px = RES[1]
     
     def move(self):
         self.px += self.vx
         self.py += self.vy
+        self.clip()
         self.playerShapeMatrix = np.array([
             [self.px-10, self.py + 10],
             [self.px, self.py+8],
             [self.px+10, self.py + 10],
             [self.px, self.py - 20]])
+        
         
     def delta(self, dvx, dvy):
         self.vx += dvx
