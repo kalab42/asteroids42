@@ -16,30 +16,26 @@ class ApplicationWindow:
     def draw(self):
         self.surface.fill(self.color)
         self.player.move()
+        self.player.clip(self.RES)
         self.player.draw(self.surface)
     
     def chkevent(self):
         for i in pg.event.get():
                 if i.type == pg.QUIT:
-                    exit()
+                    exit()    
         pressed = pg.key.get_pressed()
-        if pressed[pg.K_w]:
-            self.player.delta(0, -0.01);
-        if pressed[pg.K_s]:
-            self.player.delta(0, 0.01);
-        if pressed[pg.K_d]:
-            self.player.delta(0.01, 0);
-        if pressed[pg.K_a]: 
-            self.player.delta(-0.01, 0);        
+        if pressed[pg.K_SPACE]:
+            self.player.addDeltaV()
     
     def run(self):
         while True:
-            print('pos({0};{1}) vel({2};{3})'.format(self.player.px, self.player.py, self.player.vx, self.player.vy))
+            print('pos({0};{1})'.format(self.player.px, self.player.py))
             self.draw()
             pg.display.set_caption("FPS: {0}".format(int(self.clock.get_fps())))
             self.chkevent()
             pg.display.flip()
             self.clock.tick(self.FPS)
+            self.player.debug()
 
 if __name__ == "__main__":
     wnd = ApplicationWindow()
