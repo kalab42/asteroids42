@@ -15,6 +15,7 @@ class Player:
         self.sizeY, self.sizeX = self.playerShapeMatrix.shape
         self.playerProj = np.zeros((self.sizeY, self.sizeX-1))
         self.angle = math.pi / 2
+        self.mov = self.angle
         print(self.playerShapeMatrix)
         print()
         print(self.playerProj)
@@ -56,8 +57,18 @@ class Player:
         x, y = pg.mouse.get_pos()
         self.angle = math.atan2(y - self.py, x - self.px)
         self.playerShapeMatrix = self.playerShapeMatrix @ Matrix.rotByAxis(self.angle + math.pi/2, (self.px, self.py))
+        if self.vel > 0:
+            self.vx -= 0.01 * math.cos(self.mov)
+            self.vy -= 0.01 * math.sin(self.mov)
+            self.vel -= 0.01
+        elif self.vel < 0:
+            self.vx += 0.01 * math.cos(self.mov)
+            self.vy += 0.01 * math.sin(self.mov)
+            self.vel += 0.01
     
     def addDeltaV(self):      
         self.vx += self.deltaV * math.cos(self.angle)
         self.vy += self.deltaV * math.sin(self.angle)
-        #self.vel = math.sqrt(self.vx * self.vx + self.vy * self.vy)
+        x, y = self.px, self.py
+        self.mov = math.atan2(x + self.vx, y + self.vy)
+        self.vel = math.sqrt(self.vx * self.vx + self.vy * self.vy)
