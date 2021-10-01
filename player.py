@@ -70,5 +70,5 @@ class Player:
         self.vx += self.deltaV * math.cos(self.angle)
         self.vy += self.deltaV * math.sin(self.angle)
         x, y = self.px, self.py
-        self.mov = math.atan2(x + self.vx, y + self.vy)
+        self.mov = math.atan2(y + self.vy, x + self.vx)
         self.vel = math.sqrt(self.vx * self.vx + self.vy * self.vy)
